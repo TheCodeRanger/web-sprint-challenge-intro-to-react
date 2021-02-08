@@ -3,6 +3,11 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Character from './components/Character';
+import styled from 'styled-components';
+
+const Header = styled.h1`
+  color: red;
+`
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -13,9 +18,10 @@ const App = () => {
   // sync up with, if any.
 
     useEffect(() => {
-      axios.get('https://swapi.dev/people/')
+      axios.get('https://swapi.dev/api/people/')
           .then(res => {
-            setCharData(res.data.results)
+            console.log(res)
+            setCharData(res.data)
           })
           .catch(err => {
             console.log(err)
@@ -28,10 +34,10 @@ const App = () => {
  
   return (
     <div className="App">
-      <h1 className="Header">NERD Wars Characters</h1>
+      <Header className="Header">NERD Wars Characters</Header>
       {
-        charData.map(char => {
-          return <Character key={char.id} character={char} />
+        charData.map(item => {
+          return <Character character={item} key={item.name}/>
         })
       }
     </div>
